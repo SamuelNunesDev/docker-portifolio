@@ -39,7 +39,6 @@ Projeto criado para praticar o uso do docker. Se trata de cluster para exemplifi
   ```
 - Instalar e configurar o NFS servidor no nó `leader`
   ```bash
-  $ ssh usuario@ip-ou-dns
   $ apt-get -y install nfs-server
   $ nano /etc/exports
   ```
@@ -54,11 +53,15 @@ Projeto criado para praticar o uso do docker. Se trata de cluster para exemplifi
     ```
 - Instalar e configurar o NFS cliente nos demais nós
   ```bash
-  $ ssh usuario@ip-ou-dns
   $ apt-get -y install nfs-common
   $ mount ip-no-leader:/var/lib/docker/volumes/apache/_data /var/lib/docker/volumes/apache/_data
   $ mount ip-no-leader:/var/lib/docker/volumes/abraco-quentinho/_data /var/lib/docker volumes/abraco-quentinho/_data
   ```
+ - Adicionar os arquivos nos volumes pelo nó `leader`
+ ```bash
+ $ git clone https://github.com/SamuelNunesDev/SamuelNunesDev.git && mv SamuelNunesDev/* /var/lib/docker/volumes/apache/_data
+ $ git clone https://github.com/SamuelNunesDev/abraco-quentinho.git && mb abraco-quentinho/* /var/lib/docker/volumes/abraco-quentinho/_data
+ ```
 
 ## Créditos
 - [Samuel Nunes](https://github.com/SamuelNunesDev)
