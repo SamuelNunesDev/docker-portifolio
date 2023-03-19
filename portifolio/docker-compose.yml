@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  abraco-quentinho:
+    image: webdevops/php-apache:8.1-alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - abraco-quentinho:/app
+    depends_on:
+      - pgsql
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: "128M"
+
+  pgsql:
+    image: postgres:15.2-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgsql:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: exemplo
+      POSTGRES_PASSWORD: exemplo
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+      placement:
+        constraints:
+          - node.labels.trabalhador == 1
+
+  proxy:
+    image: 127.0.0.1:5000/proxy-portifolio:1.0
+    ports:
+      - "80:80"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: "64M"
+
+  apache:
+    image: httpd:2.4-alpine
+    volumes:
+      - apache:/usr/local/apache2/htdocs/
+    ports:
+      - "8080:80"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: "64M"
+
+volumes:
+  apache:
+    external: true
+  pgsql:
+    external: true
+  abraco-quentinho:
+    external: true
