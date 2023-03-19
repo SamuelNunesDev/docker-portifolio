@@ -1,5 +1,5 @@
 # Docker Portifólio
-Projeto criado para praticar o uso do docker. Se trata de cluster para exemplificar como criar um ambiente altamente escalável com balanceamento de carga e gerenciamento de containers (principalmente disponibilidade) com o docker swarm.
+  Projeto criado para praticar o uso do docker. Se trata de cluster para exemplificar como criar um ambiente altamente escalável com balanceamento de carga e gerenciamento de containers (principalmente disponibilidade) com o docker swarm. O conteúdo em produção está disponível no site -> [portifolio.samuelnunesdev.com](http://portifolio.samuelnunesdev.com/)
 ## Conteúdo no ambiente de Produção:
 - Quatro nós criados a partir da AWS EC2 com uma VPC, sub-rede (para conversarem entre si), um grupo de segurança e um NFS para formar o `swarm`, sendo:
   - O `leader` com disponibilidade `drain`, resposável apenas para o controle do swarm e como servidor dos volumes utilizando NFS.
@@ -60,7 +60,7 @@ Projeto criado para praticar o uso do docker. Se trata de cluster para exemplifi
  - Adicionar os arquivos nos volumes pelo nó `leader`
  ```bash
  $ git clone https://github.com/SamuelNunesDev/SamuelNunesDev.git && mv SamuelNunesDev/* /var/lib/docker/volumes/apache/_data
- $ git clone https://github.com/SamuelNunesDev/abraco-quentinho.git && mb abraco-quentinho/* /var/lib/docker/volumes/abraco-quentinho/_data
+ $ git clone https://github.com/SamuelNunesDev/abraco-quentinho.git && mv abraco-quentinho/* /var/lib/docker/volumes/abraco-quentinho/_data
  ```
 
 ## Créditos
