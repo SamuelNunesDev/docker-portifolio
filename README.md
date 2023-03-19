@@ -12,34 +12,53 @@ Projeto criado para praticar o uso do docker. Se trata de cluster para exemplifi
 - Route 53 para gerenciamento de domínios.
 ## Instalação:
 - Adicionar labels em nós que receberão container cujo o volume é fixado
-  ```$ docker node ls```
-  ```$ docker node update --label-add gerenciador=2 nome-ou-id-de-um-no-gerenciador-exceto-leader```
-  ```$ docker node update --label-add trabalhador=1 nome-ou-id-de-um-no-apenas-trabalhador```
+  ```bash
+  $ docker node ls
+  $ docker node update --label-add gerenciador=2 nome-ou-id-de-um-no-gerenciador-exceto-leader
+  $ docker node update --label-add trabalhador=1 nome-ou-id-de-um-no-apenas-trabalhador```
 - Instalando o `registry`
-  ```$ docker stack deploy -c registry/docker-compose.yml```
+  ``` bash
+  $ docker stack deploy -c registry/docker-compose.yml
+  ```
 - Criando o build do proxy
-  ```$ cd proxy-portifolio && docker build -t localhost:5000/proxy-portifolio:1.0 .```
+  ```bash
+  $ cd proxy-portifolio && docker build -t localhost:5000/proxy-portifolio:1.0 .
+  ```
 - Instalando o swarmpit
-  ```$ git clone https://github.com/swarmpit/swarmpit -b master ```
-  ```$ docker stack deploy -c swarmpit/docker-compose.yml swarmpit ```
+  ```bash
+  $ git clone https://github.com/swarmpit/swarmpit -b master 
+  $ docker stack deploy -c swarmpit/docker-compose.yml swarmpit 
+  ```
 - Instalando os demais projetos (proxy, apache, php, banco de dados e etc)
-  ```$ docker stack deploy -c portifolio/docker-compose.yml portifolio ```
+  ```bash
+  $ docker stack deploy -c portifolio/docker-compose.yml portifolio
+  ```
 - Alterando a disponibilidade do nó `leader`
-  ```$ docker node update --availability drain nome-ou-id```
+  ```bash
+  $ docker node update --availability drain nome-ou-id
+  ```
 - Instalar e configurar o NFS servidor no nó `leader`
-  ```$ ssh usuario@ip-ou-dns```
-  ```$ apt-get -y install nfs-server```
-  ```$ nano /etc/exports```
+  ```bash
+  $ ssh usuario@ip-ou-dns
+  $ apt-get -y install nfs-server
+  $ nano /etc/exports
+  ```
   - Adicione estas duas linhas no final do arquivo e salve o arquivo:
-    ```/var/lib/docker/volumes/apache/_data *(rw,sync,no_subtree_check)```
-    ```/var/lib/docker/volumes/abraco-quentinho/_data *(rw,sync,no_subtree_check)```
+    ```bash
+    /var/lib/docker/volumes/apache/_data *(rw,sync,no_subtree_check)
+    /var/lib/docker/volumes/abraco-quentinho/_data *(rw,sync,no_subtree_check)
+    ```
   - Após adicionar as linhas deve-se exportar os diretórios
-    ```$ exportfs -ar```
+    ```bash
+    $ exportfs -ar
+    ```
 - Instalar e configurar o NFS cliente nos demais nós
-  ```$ ssh usuario@ip-ou-dns```
-  ```$ apt-get -y install nfs-common```
-  ```$ mount ip-no-leader:/var/lib/docker/volumes/apache/_data /var/lib/docker/volumes/apache/_data``` 
-  ```$ mount ip-no-leader:/var/lib/docker/volumes/abraco-quentinho/_data /var/lib/docker volumes/abraco-quentinho/_data```
+  ```bash
+  $ ssh usuario@ip-ou-dns
+  $ apt-get -y install nfs-common
+  $ mount ip-no-leader:/var/lib/docker/volumes/apache/_data /var/lib/docker/volumes/apache/_data
+  $ mount ip-no-leader:/var/lib/docker/volumes/abraco-quentinho/_data /var/lib/docker volumes/abraco-quentinho/_data
+  ```
 
 ## Créditos
 - [Samuel Nunes](https://github.com/SamuelNunesDev)
